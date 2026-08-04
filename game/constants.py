@@ -27,8 +27,6 @@ BLUE = (90, 140, 235)
 PURPLE = (170, 120, 235)
 MAGENTA = (220, 90, 190)
 
-FONT_NAME = None  # usa la fuente por defecto de pygame
-
 # Rangos "normales" para alarmas
 NORMAL_RANGES = {
     "hr": (60, 100),

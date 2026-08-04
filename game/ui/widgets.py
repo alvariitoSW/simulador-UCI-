@@ -3,16 +3,20 @@ import pygame
 
 from game.constants import (
     WHITE, GREY, GREY_DARK, PANEL_BG, PANEL_BG_LIGHT, GREEN, GREEN_DARK,
-    CYAN, RED, FONT_NAME,
+    CYAN, RED,
 )
 
 _font_cache = {}
 
 
 def get_font(size, bold=False):
+    # Se usa la fuente integrada de Pygame (pygame.font.Font(None, ...)) en vez de
+    # pygame.font.SysFont: esta última busca fuentes instaladas en el sistema operativo,
+    # algo que no existe al compilar a WebAssembly con pygbag, y ahi rompe el arranque.
     key = (size, bold)
     if key not in _font_cache:
-        f = pygame.font.SysFont(FONT_NAME or "arial", size, bold=bold)
+        f = pygame.font.Font(None, size)
+        f.set_bold(bold)
         _font_cache[key] = f
     return _font_cache[key]
 
