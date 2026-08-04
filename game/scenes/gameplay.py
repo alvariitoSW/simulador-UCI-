@@ -10,10 +10,10 @@ from game.ui.widgets import Button, Panel, draw_text, draw_wrapped
 from game.ui.monitor import VitalsMonitor
 from game.sim.cpr import CPRTracker
 
-MONITOR_RECT = pygame.Rect(20, 60, 680, 250)
-CPR_RECT = pygame.Rect(20, 320, 680, 46)
-LOG_RECT = pygame.Rect(20, 376, 680, 140)
-OBJ_RECT = pygame.Rect(20, 526, 680, 150)
+MONITOR_RECT = pygame.Rect(20, 60, 680, 240)
+CPR_RECT = pygame.Rect(20, 308, 680, 96)
+LOG_RECT = pygame.Rect(20, 412, 680, 130)
+OBJ_RECT = pygame.Rect(20, 550, 680, 150)
 PANEL_RECT = pygame.Rect(720, 60, 540, 640)
 
 
@@ -27,6 +27,11 @@ class GameplayScene(Scene):
         self.continue_btn = Button((SCREEN_W // 2 - 130, SCREEN_H - 130, 260, 50),
                                     "Ver resultados", self._go_results, size=22,
                                     color=(30, 90, 55))
+        # Boton grande tocable para dar compresiones desde pantalla tactil (movil/tablet).
+        # En escritorio la barra espaciadora hace lo mismo.
+        compress_rect = pygame.Rect(CPR_RECT.x + 12, CPR_RECT.y + 44, CPR_RECT.width - 24, 40)
+        self.compress_btn = Button(compress_rect, "TOCA AQUI: COMPRIMIR",
+                                    self.cpr_tracker.press, size=18, color=(120, 40, 40))
 
     def _go_results(self):
         from game.scenes.results import ResultsScene
@@ -44,6 +49,9 @@ class GameplayScene(Scene):
         if self.case.finished:
             self.continue_btn.handle_event(event)
             return
+
+        if getattr(self.case, "phase", None) == "arrest":
+            self.compress_btn.handle_event(event)
 
         for w in self.widgets:
             w.handle_event(event)
@@ -86,14 +94,15 @@ class GameplayScene(Scene):
             rate = self.cpr_tracker.rate_per_min()
             quality = self.cpr_tracker.quality()
             color = GREEN if quality > 0.8 else (YELLOW if quality > 0.3 else RED)
-            draw_text(surface, "MANTEN PRESIONADA LA BARRA ESPACIADORA (100-120/min)",
-                       (CPR_RECT.x + 12, CPR_RECT.y + 6), size=15, color=WHITE)
+            draw_text(surface, "RCP: espaciadora en PC, o toca el boton (100-120/min)",
+                       (CPR_RECT.x + 12, CPR_RECT.y + 6), size=14, color=WHITE)
             draw_text(surface, f"{rate:.0f}/min", (CPR_RECT.right - 12, CPR_RECT.y + 6),
                        size=15, color=color, align_right=True)
-            bar_rect = pygame.Rect(CPR_RECT.x + 12, CPR_RECT.y + 27, CPR_RECT.width - 24, 10)
+            bar_rect = pygame.Rect(CPR_RECT.x + 12, CPR_RECT.y + 25, CPR_RECT.width - 24, 10)
             pygame.draw.rect(surface, GREY_DARK, bar_rect, border_radius=4)
             fill = pygame.Rect(bar_rect.x, bar_rect.y, int(bar_rect.width * quality), bar_rect.height)
             pygame.draw.rect(surface, color, fill, border_radius=4)
+            self.compress_btn.draw(surface)
         else:
             draw_text(surface, "Sin necesidad de compresiones en este momento.",
                        (CPR_RECT.x + 12, CPR_RECT.y + 15), size=14, color=GREY)

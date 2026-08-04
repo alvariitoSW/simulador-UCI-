@@ -4,3 +4,4 @@ __pycache__/
 venv/
 save/progress.json
 .DS_Store
+build/

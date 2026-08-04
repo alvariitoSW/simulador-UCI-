@@ -1,9 +1,10 @@
 """Aplicación principal: crea la ventana y gestiona el bucle de juego y las escenas."""
+import asyncio
 import sys
 
 import pygame
 
-from game.constants import SCREEN_W, SCREEN_H, FPS, TITLE, BLACK
+from game.constants import SCREEN_W, SCREEN_H, FPS, TITLE
 
 
 class App:
@@ -21,7 +22,8 @@ class App:
     def change_scene(self, scene):
         self.scene = scene
 
-    def run(self):
+    async def run_async(self):
+        """Bucle principal asíncrono, compatible con pygbag (compilación a web/WASM)."""
         while self.running:
             dt = self.clock.tick(FPS) / 1000.0
             dt = min(dt, 0.05)  # evita saltos grandes si la ventana se congela
@@ -36,5 +38,12 @@ class App:
             self.scene.draw(self.screen)
             pygame.display.flip()
 
+            # Cede el control al navegador en la build web; en escritorio no tiene coste real.
+            await asyncio.sleep(0)
+
         pygame.quit()
-        sys.exit(0)
+        if sys.platform != "emscripten":
+            sys.exit(0)
+
+    def run(self):
+        asyncio.run(self.run_async())

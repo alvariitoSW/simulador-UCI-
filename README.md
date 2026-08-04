@@ -24,9 +24,38 @@ python3 main.py
 
 ## Controles
 
-- **Ratón**: usar los botones y deslizadores del panel de acciones.
-- **Barra espaciadora**: dar compresiones torácicas (RCP) durante un paro cardiorrespiratorio.
+- **Ratón / toque**: usar los botones y deslizadores del panel de acciones.
+- **Barra espaciadora** (o el botón táctil "TOCA AQUÍ: COMPRIMIR" en pantalla): dar
+  compresiones torácicas (RCP) durante un paro cardiorrespiratorio.
 - **ESC**: volver a la selección de casos durante una partida.
+
+## Jugar desde el móvil (versión web)
+
+Pygame es una librería de escritorio, así que no corre nativamente en un navegador o app
+de móvil. Para probarlo desde el teléfono, este proyecto está preparado para compilarse a
+WebAssembly con [pygbag](https://github.com/pygame-web/pygbag) (código ya adaptado con un
+bucle asíncrono y un botón táctil de RCP, ya que el móvil no tiene barra espaciadora).
+
+Debes generarlo desde un ordenador con acceso normal a internet (pygbag descarga una
+plantilla desde un CDN la primera vez):
+
+```bash
+pip install pygbag
+pygbag main.py
+```
+
+Esto compila el juego y levanta un servidor local (por defecto en el puerto 8000).
+Con el ordenador y el móvil en la **misma red WiFi**, abre en el navegador del móvil:
+
+```
+http://<IP-de-tu-ordenador-en-la-red-local>:8000
+```
+
+(la IP local se ve con `ipconfig` en Windows o `ip addr` / `ifconfig` en macOS/Linux).
+
+Si en vez de un servidor temporal quieres un enlace permanente, compílalo una vez con
+`pygbag --build main.py` (o `--archive` para generar un `.zip`) y sube el contenido de
+`build/web/` a GitHub Pages, itch.io o cualquier hosting estático.
 
 ## Casos clínicos incluidos
 
