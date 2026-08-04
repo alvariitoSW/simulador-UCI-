@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+save/progress.json
+.DS_Store
