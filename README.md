@@ -57,6 +57,20 @@ Si en vez de un servidor temporal quieres un enlace permanente, compílalo una v
 `pygbag --build main.py` (o `--archive` para generar un `.zip`) y sube el contenido de
 `build/web/` a GitHub Pages, itch.io o cualquier hosting estático.
 
+### Despliegue automático a GitHub Pages
+
+El repositorio incluye `.github/workflows/deploy-pages.yml`, que compila la versión web con
+pygbag y la publica en GitHub Pages en cada push a `main`. Para activarlo (solo la primera
+vez, es un ajuste manual en GitHub que no se puede hacer por código):
+
+1. Ve a **Settings → Pages** del repositorio.
+2. En "Build and deployment" → "Source", elige **GitHub Actions**.
+3. Haz push a `main` (o lanza el workflow manualmente desde la pestaña **Actions**).
+
+Tras el primer despliegue, la URL pública queda fija en algo como
+`https://<usuario>.github.io/<repositorio>/` y se actualiza sola con cada push. Así puedes
+abrirla directamente desde el navegador del móvil, sin necesidad de compilar nada localmente.
+
 ## Casos clínicos incluidos
 
 1. **Shock séptico** — reanimación con cristaloides, noradrenalina y antibiótico precoz.
