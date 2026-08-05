@@ -81,6 +81,9 @@ abrirla directamente desde el navegador del móvil, sin necesidad de compilar na
    según protocolo hasta lograr el retorno de la circulación espontánea (RCE).
 4. **Sedación y analgesia** — titula propofol y fentanilo para lograr una sedación ligera
    y objetivo (escala RASS -1 a 0), evitando sobresedación y agitación peligrosa.
+5. **Neutropenia febril de alto riesgo** — reconoce las "red flags" que invalidan el
+   índice MASCC, extrae hemocultivos e inicia antibiótico empírico de amplio espectro
+   sin demora. Basado en el documento de consenso SEIMC-SEHH 2020.
 
 Cada caso termina con una pantalla de resultados que resume la puntuación obtenida y una
 lista de **puntos clave para estudiar**, pensada como repaso rápido del tema.

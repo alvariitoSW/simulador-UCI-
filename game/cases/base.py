@@ -31,6 +31,11 @@ class BaseCase:
         from game.sim.patient import vitals_alarm
         return vitals_alarm(self.state)
 
+    def status_lines(self):
+        """Lineas opcionales (p.ej. analiticas especificas del caso) que la escena
+        de juego muestra en el panel de estado en vez del HUD de RCP por defecto."""
+        return None
+
     def finish(self, won, title, message, debrief):
         self.finished = True
         self.won = won

@@ -103,6 +103,14 @@ class GameplayScene(Scene):
             fill = pygame.Rect(bar_rect.x, bar_rect.y, int(bar_rect.width * quality), bar_rect.height)
             pygame.draw.rect(surface, color, fill, border_radius=4)
             self.compress_btn.draw(surface)
+            return
+
+        lines = self.case.status_lines()
+        if lines:
+            y = CPR_RECT.y + 8
+            for line in lines[:3]:
+                draw_text(surface, line, (CPR_RECT.x + 12, y), size=14, color=CYAN)
+                y += 19
         else:
             draw_text(surface, "Sin necesidad de compresiones en este momento.",
                        (CPR_RECT.x + 12, CPR_RECT.y + 15), size=14, color=GREY)
